@@ -1,0 +1,16 @@
+<% layout('./layouts/layout.eta') %>
+
+<% if (it.answer != null) { %>
+<br><br><div class="text-center align-items-center">
+<h1>Incorrect</h1><br>
+<p>The correct option was <%= it.answer%></p>
+
+<a href="/quiz/<%= it.topicId %>">Next question</a>
+</div>
+<% } else { %>
+<br><br><div class="text-center align-items-center">
+<h1>Incorrect</h1><br>
+
+<a href="/quiz/<%= it.topicId %>">Next question</a>
+</div>
+<% } %>

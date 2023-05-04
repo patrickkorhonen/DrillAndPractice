@@ -1,0 +1,53 @@
+<% layout('./layouts/layout.eta') %>
+
+<br><a href="/topics/<%= it.topicId %>">Back</a>
+
+<h3 class="py-1"><%= it.question.question_text %></h3>
+
+<form method="POST" action="/topics/<%= it.topicId %>/questions/<%= it.questionId%>/options">
+Answer option:
+<input type="text" name="option_text"/>
+<input type="checkbox" id="correct" name="is_correct" value="correct"/>
+<label>Correct</label><br>
+<input type="submit" value="Add"/>
+</form>
+
+<% if (it.validationErrors) { %>
+    <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+        <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+            <p><%= err %></p>
+        <% }); %>
+    <% }); %>
+<% } %>
+
+<% if (it.options && it.options.length > 0) { %>
+
+<div class="row">
+<div class="col-6">
+<div class="list-group">
+<% it.options.forEach(option => { %>
+  <div class="list-group-item py-1">
+  <ul class="d-flex justify-content-between list-unstyled">
+  <li class="m-0"><%= option.option_text %></li>
+  <li class="m-0 text-uppercase text-end"><%= option.is_correct %></li>
+  </ul>
+  <form method="POST" action="/topics/<%= it.topicId %>/questions/<%= it.questionId %>/options/<%= option.id %>/delete">
+      <input type="submit" value="Delete option"/>
+    </form>
+  </div>
+<% }); %>
+</div>
+</div>
+</div>
+
+<% } else { %>
+
+<form method="POST" action="/topics/<%= it.topicId %>/questions/<%= it.questionId %>/delete">
+      <input type="submit" value="Delete question"/>
+    </form>
+
+<% } %>
+
+
+
+

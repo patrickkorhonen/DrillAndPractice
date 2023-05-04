@@ -1,0 +1,25 @@
+<% layout('./layouts/layout.eta') %>
+
+
+<br><h1 class="text-center">Quiz</h1><br>
+
+<% if (it.topics && it.topics.length > 0) { %>
+
+<div class="row justify-content-center">
+<div class="col-lg-8">
+<div class="list-group">
+
+<% it.topics.forEach(topic => { %>
+<div class="list-group-item py-3">
+  <a href="/quiz/<%= topic.id %>"><%= topic.name %></a>
+  </div>
+<% }); %>
+</div>
+</div>
+</div>
+
+<% } else { %>
+
+<p class="text-center">None available.</p>
+
+<% } %>

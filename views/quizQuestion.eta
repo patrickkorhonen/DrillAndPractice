@@ -1,0 +1,28 @@
+<% layout('./layouts/layout.eta') %>
+
+
+<% if (it.question) { %>
+
+<h1 class="text-center"><%= it.question.question_text %></h1><br>
+
+<div class="row justify-content-center">
+<div class="col-lg-8">
+<div class="list-group">
+
+<% it.options.forEach(option => { %>
+<div class="list-group-item py-2">
+  <%= option.option_text%>
+  <form method="POST" action="/quiz/<%= it.topicId %>/questions/<%= it.question.id %>/options/<%= option.id %>">
+      <input type="submit" value="Choose"/>
+    </form>
+</div>
+<% }); %>
+</div>
+</div>
+</div>
+
+<% } else { %>
+
+<br><h1 class="text-center">No questions</h1>
+
+<% } %>

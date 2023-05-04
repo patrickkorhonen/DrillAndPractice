@@ -1,0 +1,55 @@
+<% layout('./layouts/layout.eta') %>
+
+<br><h1 class="text-center">Topics</h1><br>
+
+<% if (it.isAdmin) { %>
+
+<div class="text-center">
+<h3>Add a topic</h3>
+
+<form method="POST" action="/topics">
+Name of the topic:<br/>
+<input type="text" name="name" />
+<input type="submit" value="Add"/>
+</form>
+
+<% if (it.validationErrors) { %>
+    <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+        <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+            <p><%= err %></p>
+        <% }); %>
+    <% }); %>
+<% } %>
+
+</div>
+
+<% } %>
+
+<% if (it.topics && it.topics.length > 0) { %>
+
+<div class="row justify-content-center">
+<div class="col-lg-8">
+<div class="list-group">
+<% it.topics.forEach(topic => { %>
+  <div class="list-group-item py-3">
+  <a href="/topics/<%= topic.id %>"><%= topic.name %></a>
+  <% if (it.isAdmin) { %>
+  <form method="POST" action="/topics/<%= topic.id %>/delete">
+      <input type="submit" value="Delete"/>
+    </form>
+    <% } %>
+  </div>
+  
+<% }); %>
+</div>
+</div>
+</div>
+
+
+<% } else { %>
+
+<p class="text-center">None available.</p>
+
+<% } %>
+
+
