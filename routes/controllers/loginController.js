@@ -1,7 +1,7 @@
 import * as userService from "../../services/userService.js";
 import { bcrypt } from "../../deps.js";
 
-const processLogin = async ({ request, response, state }) => {
+const processLogin = async ({ request, response, state, render }) => {
   const body = request.body({ type: "form" });
   const params = await body.value;
 
@@ -9,7 +9,7 @@ const processLogin = async ({ request, response, state }) => {
     params.get("email"),
   );
   if (userFromDatabase.length != 1) {
-    response.redirect("/auth/login");
+    render("login.eta", {error: "Wrong password or email"});
     return;
   }
 
@@ -20,7 +20,7 @@ const processLogin = async ({ request, response, state }) => {
   );
 
   if (!passwordMatches) {
-    response.redirect("/auth/login");
+    render("login.eta", {error: "Wrong password or email"});
     return;
   }
 
