@@ -1,6 +1,6 @@
 <% layout('./layouts/layout.eta') %>
 <br><br><div class="text-center align-items-center">
-<h1>Correct</h1>
+<h1>Correct!</h1>
 
 <a href="/quiz/<%= it.topicId %>">Next question</a>
 </div>

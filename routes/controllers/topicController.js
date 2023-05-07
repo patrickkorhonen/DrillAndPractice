@@ -38,8 +38,10 @@ const list = async ({ render, user }) => {
     render("topics.eta", { topics: await topicService.listTopics(), isAdmin: user.admin});
   };
 
-const deleteTopic = async ({params, response}) => {
+const deleteTopic = async ({params, response, user}) => {
+  if (user.admin) {
     await topicService.deleteTopic(params.id);
+  }
 
     response.redirect("/topics");
 }

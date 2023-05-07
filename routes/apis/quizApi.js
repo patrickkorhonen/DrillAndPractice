@@ -7,14 +7,19 @@ const showRandomQuestion = async ({response}) => {
 
     if (randQuestion != null) {
     const options = await optionService.listOptions(randQuestion.id);
-    for (let i = 0; i < options.length; i++) {
-        delete options[i].question_id;
-        delete options[i].is_correct;
+
+      let optionArray = []
+      for (let i = 0; i < options.length; i++) {
+        optionArray.push( {
+        optionId: options[i].id,
+        optionText: options[i].option_text
+        } )
       }
+    
     response.body = {
         questionId: randQuestion.id,
         questionText: randQuestion.question_text,
-        answerOptions: options,
+        answerOptions: optionArray,
     };
     } else {
     response.body = {}
@@ -26,7 +31,7 @@ const tellAnswer = async ({request, response}) => {
     const content = await body.value;
     const answer = await optionService.correctOrNot(content.optionId)
     response.body = { 
-        correct: answer
+        correct: answer.is_correct
     }
     
 }
